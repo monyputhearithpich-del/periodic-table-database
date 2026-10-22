@@ -8,7 +8,6 @@ then
   exit
 fi
 
-# Determine if input is atomic number, symbol, or name
 if [[ $1 =~ ^[0-9]+$ ]]
 then
   CONDITION="e.atomic_number = $1"
@@ -16,7 +15,7 @@ else
   CONDITION="e.symbol = '$1' OR e.name = '$1'"
 fi
 
-QUERY="SELECT e.atomic_number, e.name, e.symbol, t.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius \
+QUERY="SELECT e.atomic_number, e.name, e.symbol, t.type, TRIM(TRAILING '0' FROM TRIM(TRAILING '.' FROM p.atomic_mass::TEXT)), p.melting_point_celsius, p.boiling_point_celsius \
 FROM elements e \
 JOIN properties p ON e.atomic_number = p.atomic_number \
 JOIN types t ON p.type_id = t.type_id \
