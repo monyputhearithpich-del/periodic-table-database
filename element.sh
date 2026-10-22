@@ -1,4 +1,5 @@
 #!/bin/bash
+# Look up an element by atomic number, symbol, or name.
 
 PSQL="psql --username=freecodecamp --dbname=periodic_table -t --no-align -c"
 
